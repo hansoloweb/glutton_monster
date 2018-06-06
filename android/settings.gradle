@@ -1,0 +1,3 @@
+rootProject.name = 'glutton_monster'
+
+include ':app'
