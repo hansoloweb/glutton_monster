@@ -14,6 +14,9 @@ export default class Detail extends React.Component {
 			shop_id: '',
 			shop_data: '',
 			total_stars: '0',
+			contact: '',
+			address: '',
+			operation_hours: '',
 		};
 	}
 
@@ -38,13 +41,19 @@ export default class Detail extends React.Component {
     		// Error retrieving data
 		}
 
-		var shop_data = {total_reviews:"2", total_rating:"9"};
+		var shop_data = {total_reviews:"2", total_rating:"9", contact:"1300882525", address:"25, U1, Damansanra", operation_hours:"10:00 a.m - 10.00 p.m, Daily"};
 
 		this.setState({shop_data:shop_data});
 
 		if(shop_data){
 			var total_stars = shop_data.total_rating / shop_data.total_reviews;
 			this.setState({total_stars:total_stars});
+
+			this.setState({contact:shop_data.contact});
+
+			this.setState({address:shop_data.address});
+
+			this.setState({operation_hours:shop_data.operation_hours});
 		}
 
 	}
@@ -109,7 +118,32 @@ export default class Detail extends React.Component {
 							</View>
 						</View>
 						<View>
-
+							<List>
+				            	<ListItem icon>
+				              		<Left>
+				                		<Icon name="md-time" />
+				              		</Left>
+				              		<Body>
+				                		<Text>{this.state.operation_hours}</Text>
+				              		</Body>
+			            		</ListItem>
+			            		<ListItem icon>
+				              		<Left>
+				                		<Icon name="md-call" />
+				              		</Left>
+				              		<Body>
+				                		<Text>{this.state.contact}</Text>
+				              		</Body>
+			            		</ListItem>
+			            		<ListItem icon>
+				              		<Left>
+				                		<Icon name="address" type="Entypo"/>
+				              		</Left>
+				              		<Body>
+				                		<Text>{this.state.address}</Text>
+				              		</Body>
+			            		</ListItem>
+				          	</List>
 						</View>
 					</Content>
 				</Container>
