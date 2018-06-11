@@ -1,5 +1,5 @@
 import React from "react";
-import { AppRegistry, View, StatusBar, AsyncStorage, RefreshControl, Alert, StyleSheet, Image } from "react-native";
+import { AppRegistry, View, StatusBar, AsyncStorage, RefreshControl, Alert, StyleSheet, Image, Linking, Platform } from "react-native";
 import { Container, Body, Content, Thumbnail, Header, Left, Right, Icon, Title, Input, Item, Label, Button, Text, List, ListItem, StyleProvider, Card, CardItem, H1, H3 } from "native-base";
 import getTheme from './../../native-base-theme/components';
 import material from './../../native-base-theme/variables/material';
@@ -91,6 +91,23 @@ export default class Detail extends React.Component {
 		}
 	}
 
+	redirectToMap() {
+		const scheme = Platform.OS === 'ios' ? 'maps:0,0?q=' : 'geo:0,0?q=';
+		const lat = '3.045695';
+		const lng = '101.618252';
+		const latLng = `${lat},${lng}`;
+		const label = 'IOI MALL PUCHONG';
+		const url = Platform.OS === 'ios' ? `${scheme}${label}@${latLng}` : `${scheme}${latLng}(${label})`;
+
+	    Linking.canOpenURL(url).then(supported => {
+	        if (supported) {
+	            Linking.openURL(url);
+	        } else {
+	            console.log('Don\'t know how to go');
+	        }
+	    }).catch(err => console.error('An error occurred', err));
+	}
+
 	render() {
 		return (
 			<StyleProvider style={getTheme(material)}>
@@ -135,7 +152,7 @@ export default class Detail extends React.Component {
 				                		<Text>{this.state.contact}</Text>
 				              		</Body>
 			            		</ListItem>
-			            		<ListItem icon>
+			            		<ListItem icon onPress={() => this.redirectToMap()}>
 				              		<Left>
 				                		<Icon name="address" type="Entypo"/>
 				              		</Left>
