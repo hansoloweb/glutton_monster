@@ -108,6 +108,17 @@ export default class Detail extends React.Component {
 	    }).catch(err => console.error('An error occurred', err));
 	}
 
+	redirectToCall() {
+
+	    Linking.canOpenURL('tel:1300882525').then(supported => {
+	        if (supported) {
+	            Linking.openURL('tel:1300882525');
+	        } else {
+	            console.log('Unable to call');
+	        }
+	    }).catch(err => console.error('An error occurred', err));
+	}
+
 	render() {
 		return (
 			<StyleProvider style={getTheme(material)}>
@@ -144,7 +155,7 @@ export default class Detail extends React.Component {
 				                		<Text>{this.state.operation_hours}</Text>
 				              		</Body>
 			            		</ListItem>
-			            		<ListItem icon>
+			            		<ListItem icon onPress={() => this.redirectToCall()}>
 				              		<Left>
 				                		<Icon name="md-call" />
 				              		</Left>
