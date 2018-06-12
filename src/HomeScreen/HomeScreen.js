@@ -1,6 +1,6 @@
 import React from "react";
-import { StatusBar, Dimensions, StyleSheet, ScrollView, Image, View, TouchableOpacity, AsyncStorage, Picker } from "react-native";
-import { Container, Header, Title, Left, Icon, Right, Button, Body, Content,Text, Card, CardItem, StyleProvider,H1, H3 } from "native-base";
+import { StatusBar, Dimensions, StyleSheet, ScrollView, Image, View, TouchableOpacity, AsyncStorage } from "react-native";
+import { Container, Header, Title, Left, Icon, Right, Button, Body, Content,Text, Card, CardItem, StyleProvider,H1, H3, Picker } from "native-base";
 import getTheme from './../../native-base-theme/components';
 import material from './../../native-base-theme/variables/material';
 import { NavigationActions  } from "react-navigation";
@@ -69,12 +69,13 @@ export default class HomeScreen extends React.Component {
                             <Picker
                                 selectedValue={this.state.location}
                                 style={{ flex:1 }}
+                                iosHeader="Select one"
+                                mode="dropdown"
                                 onValueChange={(itemValue, itemIndex) => this.setState({location: itemValue})}>
                                 <Picker.Item label="Kuala Lumpur" value="1" />
                                 <Picker.Item label="Selangor" value="2" />
                                 <Picker.Item label="Penang" value="3" />
-                                <Picker.Item label="Melaka" value="4" />
-                                
+                                <Picker.Item label="Melaka" value="4" />                                
                             </Picker>
                         </View>
                         <View>
@@ -141,6 +142,7 @@ var styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         // backgroundColor: '#635DB7'
+        overflow:'hidden',
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,
