@@ -1,9 +1,10 @@
 import React from "react";
-import { AppRegistry, View, StatusBar, AsyncStorage, RefreshControl, Alert, StyleSheet, Image, Linking, Platform } from "react-native";
+import { AppRegistry, View, StatusBar, AsyncStorage, RefreshControl, Alert, StyleSheet, Image, Linking, Platform, Dimensions } from "react-native";
 import { Container, Body, Content, Thumbnail, Header, Left, Right, Icon, Title, Input, Item, Label, Button, Text, List, ListItem, StyleProvider, Card, CardItem, H1, H3 } from "native-base";
 import getTheme from './../../native-base-theme/components';
 import material from './../../native-base-theme/variables/material';
 import { Transition } from "react-navigation-fluid-transitions";
+import Carousel, { Pagination, ParallaxImage } from 'react-native-snap-carousel';
 
 export default class Detail extends React.Component {
 
@@ -17,6 +18,12 @@ export default class Detail extends React.Component {
 			contact: '',
 			address: '',
 			operation_hours: '',
+			photos: [],
+			viewport: {
+	            width: Dimensions.get('window').width,
+	            height: Dimensions.get('window').height
+        	},
+        	activeSlide: 0,
 		};
 	}
 
@@ -55,6 +62,14 @@ export default class Detail extends React.Component {
 
 			this.setState({operation_hours:shop_data.operation_hours});
 		}
+
+		var photo_data = [
+		{title:"a", img:"https://s-media-cache-ak0.pinimg.com/originals/bf/79/30/bf79308f01a478e25f469df25e88b4bf.jpg"},
+		{title:"b", img:"https://crescentfoods.com/wp-content/uploads/2014/07/succulent-portion-of-grilled-beef-steak.jpg"},
+		{title:"c", img:"https://i.pinimg.com/originals/8d/eb/20/8deb20bc1894a76334c6c98b29fe408c.jpg"},
+		];
+
+		this.setState({photos:photo_data});
 
 	}
 
@@ -119,6 +134,42 @@ export default class Detail extends React.Component {
 	    }).catch(err => console.error('An error occurred', err));
 	}
 
+    _renderItem ({item, index}, parallaxProps) {
+        return (
+            <View style={{height:250, width:"100%"}}>
+                <ParallaxImage
+                    source={{ uri: item.img }}
+                    containerStyle={{flex:1}}
+                    style={{flex:1, justifyContent: "center", alignItems: "center", resizeMode:"contain"}}
+                    parallaxFactor={0.4}
+                    {...parallaxProps}
+                />
+            </View>
+        );
+    }
+
+    get pagination () {
+        const { photos, activeSlide } = this.state;
+        return (
+            <Pagination
+              dotsLength={photos.length}
+              activeDotIndex={activeSlide}
+              containerStyle={{}}
+              dotStyle={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: 5,
+                  marginHorizontal: 8,
+                  backgroundColor: 'rgba(0, 0, 0, 0.92)'
+              }}
+              inactiveDotStyle={{
+              }}
+              inactiveDotOpacity={0.4}
+              inactiveDotScale={0.6}
+            />
+        );
+    }
+
 	render() {
 		return (
 			<StyleProvider style={getTheme(material)}>
@@ -172,6 +223,27 @@ export default class Detail extends React.Component {
 				              		</Body>
 			            		</ListItem>
 				          	</List>
+						</View>
+						<View><Text style={{textAlign:"center",marginTop:20}}>~ Photos ~</Text></View>
+						<View onLayout={() => {
+			                this.setState({
+			                    viewport: {
+			                        width: Dimensions.get('window').width,
+			                        height: Dimensions.get('window').height
+			                    }
+			                });
+			            }}>
+							<Carousel
+								ref={(c) => { this._carousel = c; }}
+								data={this.state.photos}
+								renderItem={this._renderItem}
+								onSnapToItem={(index) => this.setState({ activeSlide: index }) }
+								sliderWidth={this.state.viewport.width}
+								itemWidth={this.state.viewport.width*0.8}
+								enableMomentum={true}
+								hasParallaxImages={true}
+				            />
+				            { this.pagination }
 						</View>
 					</Content>
 				</Container>
