@@ -53,7 +53,10 @@ export default class ShopList extends React.Component {
     		// Error retrieving data
 		}
 
-		var shop_list = [{key:"1", name:"Aoki Tei", tags:["#Japanese", "#Buffet"], img:"http://www.sunwaynexis.com.my/wp-content/uploads/2015/07/aoki-tei.jpg"}, {key:"2", name:"Tony Roma", tags:["#Western", "#Steak"], img:"http://www.freestufffinder.ca/wp-content/uploads/2013/11/tony-roma.jpg"} ];
+		var shop_list = [
+		{id:"1", name:"Aoki Tei", tags:["#Japanese", "#Buffet"], img:"http://www.sunwaynexis.com.my/wp-content/uploads/2015/07/aoki-tei.jpg"}, 
+		{id:"2", name:"Tony Roma", tags:["#Western", "#Steak"], img:"http://www.freestufffinder.ca/wp-content/uploads/2013/11/tony-roma.jpg"} 
+		];
 		this.setState({shop_listing : shop_list});
 	}
 
@@ -77,8 +80,9 @@ export default class ShopList extends React.Component {
 							<View>
 								<FlatList
 									data={this.state.shop_listing}
-						          	renderItem={({item}) => <ListingItem name={item.name} keys={item.key} tags={item.tags} img={item.img} onDetailPress={() => this.props.navigation.navigate('Details', {
-					                shop_id: item.key,
+									keyExtractor={(item, index) => item.id}
+						          	renderItem={({item}) => <ListingItem {...item} onDetailPress={() => this.props.navigation.navigate('Details', {
+					                shop_id: item.id,
 					                shop_name: item.name,
 					                })}/>}
 						        />

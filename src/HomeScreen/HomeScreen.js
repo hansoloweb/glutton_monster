@@ -136,7 +136,8 @@ export default class HomeScreen extends React.Component {
 var styles = StyleSheet.create({
     item: {
         flex: 1,
-        height: Dimensions.get('window').height * 0.5 * 0.37,
+        height: 135,
+        // height: Dimensions.get('window').height * 0.5 * 0.37,
         // borderWidth: 1,
         // borderColor: "lightgray",
         alignItems: 'center',

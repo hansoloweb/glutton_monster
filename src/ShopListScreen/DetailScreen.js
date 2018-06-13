@@ -15,6 +15,7 @@ export default class Detail extends React.Component {
 			shop_id: '',
 			shop_data: '',
 			total_stars: '0',
+			total_reviews: '0',
 			contact: '',
 			address: '',
 			operation_hours: '',
@@ -48,13 +49,16 @@ export default class Detail extends React.Component {
     		// Error retrieving data
 		}
 
-		var shop_data = {total_reviews:"2", total_rating:"9", contact:"1300882525", address:"25, U1, Damansanra", operation_hours:"10:00 a.m - 10.00 p.m, Daily"};
+		var shop_data = {total_reviews:"3", total_rating:"10", contact:"1300882525", address:"25, U1, Damansanra", operation_hours:"10:00 a.m - 10.00 p.m, Daily"};
 
 		this.setState({shop_data:shop_data});
 
 		if(shop_data){
 			var total_stars = shop_data.total_rating / shop_data.total_reviews;
+
 			this.setState({total_stars:total_stars});
+
+			this.setState({total_reviews:shop_data.total_reviews});
 
 			this.setState({contact:shop_data.contact});
 
@@ -98,7 +102,7 @@ export default class Detail extends React.Component {
 
 				if(i == 5){
 					stars.push(
-						<Text note key={i}> {total_stars} Reviews</Text>
+						<Text note key={i}> {this.state.total_reviews} Reviews</Text>
 					)
 				}
 			}
@@ -187,8 +191,8 @@ export default class Detail extends React.Component {
 					</Header>
 					<Content padder>
 						<View style={{flexDirection:"row"}}>
-							<View style={{flex:1}}>
-								<Thumbnail large source={{uri: 'http://cdn.realscreen.com/wp/wp-content/uploads/2017/08/Gordon-Ramsay.jpg?d4781b'}} />
+							<View style={{flex:1, alignItems: 'center'}}>
+								<Thumbnail large source={{uri: 'http://cdn.realscreen.com/wp/wp-content/uploads/2017/08/Gordon-Ramsay.jpg?d4781b'}}/>
 							</View>
 							<View style={{flex:2}}>
 								<Text style={{fontWeight:"bold"}}>{this.state.shop_name.toUpperCase()}</Text>
